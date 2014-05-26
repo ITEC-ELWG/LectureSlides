@@ -1,3 +1,4 @@
+name: index
 class: center, middle 
 .master-title[
 # Javascript模块化实战
@@ -20,18 +21,19 @@ background-image: url(http://fe-lecture-slides.qiniudn.com/Javascript%E6%A8%A1%E
 
 # 引言
 
+.mtl[
 ### 模块化的Javascript早已流行起来
+]
 
+.mtm[
 ### 如果你还在使用传统的方式写JS，那你就out了
-
-* 什么是模块？
-* 为什么使用模块？
+]
 
 ---
 
 ## 思想的转变
 
-.center.mtm[
+.center.mtl[
 ### 面向过程
 
 |
@@ -87,6 +89,61 @@ function log(info) {
 
 ## 为什么使用模块？
 
+### 恼人的命名冲突
+
+解决办法：参照Java的方式，引入命名空间
+
+```javascript
+// 冗长的命名空间声明
+var org = {};
+org.elwg = {};
+org.elwg.util = {};
+
+org.elwg.util.each = function (arr) {
+    // ...
+};
+
+org.elwg.util.log = function (str) {
+    // ...
+};
+```
+
 ---
 
-*JavaScript当前版本并没有为开发者们提供以一种合理的方式来引入模块的方法。正在制定中的ECMAScript标准第六版，将正式支持"类"和"模块"，但还需要很长时间才能投入实用。*
+## 为什么使用模块？（续）
+
+### 繁琐的文件依赖
+
+（1）漏写依赖
+
+```html
+*<script src="util.js"></script>
+<script src="dialog.js"></script>
+<script>
+    org.elwg.dialog.init({
+        /* 传入配置 */
+    });
+</script>
+```
+
+（2）繁琐的依赖
+
+```html
+<script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.uploadify.js"></script>
+<script type="text/javascript" src="js/lib/openseadragon.js"></script>
+<script type="text/javascript" src="js/util/Constant.js"></script>
+<script type="text/javascript" src="js/modules/common_view.js"></script>
+<script type="text/javascript" src="js/modules/image_view.js"></script>
+<script type="text/javascript" src="js/main/board_present.js"></script>
+```
+
+---
+
+class: center, middle
+
+*Javascript当前版本并没有为开发者们提供以一种合理的方式来引入模块的方法。正在制定中的ECMAScript标准第六版，将正式支持"类"和"模块"，但还需要很长时间才能投入实用。*
+
+### Javascript是强大的，可以模拟模块的功能。
+
+

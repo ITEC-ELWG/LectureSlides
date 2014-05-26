@@ -33,7 +33,7 @@ h1, h2, h3 {
 }
 .remark-code, .remark-inline-code {
     font-size: 16px;
-    font-family:'Consolas';
+    font-family: "Consolas", "Microsoft Yahei";
 }
 
 /* util */
