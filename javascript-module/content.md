@@ -222,7 +222,7 @@ var foo = function() {
     var a = 3, b = 5;
     var bar = function() {
         var c = 7;
-        a += (b + c);
+        a += (b + c);  // 嵌套的函数可以访问其外层作用域中声明的变量
     };
     bar();
 };
@@ -283,3 +283,157 @@ var girl = (function() {
 })();
 console.log(girl._cup);
 ```
+
+参考：[闭包（MDN）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Closures)
+
+---
+
+### 思考题
+
+思考下面程序的运行结果。
+
+```javascript
+var name = "The Window";
+var object = {
+    name : "My Object",
+    getNameFunc : function(){
+        return function() {
+            return this.name;
+        };
+    }
+};
+console.log(object.getNameFunc()());
+```
+
+如何把上面的程序修改成你预期的结果？
+
+---
+
+# 模块的写法
+
+**Goal** 编写模块logger，用于输出日志
+
+**API**
+
+* `logger.init(options)`：传入参数初始化logger
+    * `options.debug`：boolean，当此项为true时，才输出东西
+    * `options.type`：String，可选'html'。默认为`'console'`，即控制台输出
+    * `options.containerId`：String，要输出HTML的容器ID。默认为`'logger-container'`，即控制台输出
+* `logger.log(info)`：输出info
+
+---
+
+## 最原始的写法
+
+```javascript
+/* logger.js */
+
+var options = {
+    debug: true,
+    type: 'console',
+    containerId: 'logger-container'
+};
+
+function init(opts) {
+    options = opts;
+}
+
+function log(info) {
+    if(options.debug) {
+        if(options.type === 'console') {
+            console.log(info);
+        } else if(options.type === 'html') {
+            var node = document.createElement('p');
+            node.innerHTML = info;
+            document.getElementById(options.containerId).appendChild(node);
+        } else {
+            console.error('Unknown log type.');
+        }
+    }
+}
+```
+
+缺点：命名容易冲突
+
+---
+
+## 命名空间与封装对象写法
+
+```javascript
+var util = util || {};
+
+util.logger = {
+    _options = {
+        debug: true,
+        type: 'console',
+        containerId: 'logger-container'
+    }, 
+    init: function(opts) {
+*        this._options = opts;
+    },
+    log: function(info) {
+*        var options = this.options, node;
+        if(options.debug) {
+            // ......
+        }
+    }
+}
+```
+
+改进：将全局变量缩减到只剩logger一个
+
+缺点：可以访问内部变量_options
+
+---
+
+## 立即函数+闭包+全局变量注入
+
+```javascript
+*var logger = (function($) {
+    var _options = { // ...
+    };
+
+    var init = function(opts) { // ...
+    };
+
+    var log = function(info) { 
+        // ...
+        $('#' + options.containerId).append(node);  // 使用jQuery
+        // ...
+    };
+
+    return {
+        init: init,
+        log: log
+    };
+
+*})(jQuery);
+```
+
+改进：屏蔽了私有变量；通过全局变量注入的方式，引入了第三方的库
+
+缺点：当模块变得庞大和依赖变多时，脚本的加载顺序就会成为一个很大的麻烦
+
+---
+
+## 宽放大模式
+
+如果一个模块很大，必须分成几个部分，或者一个模块需要继承另一个模块，这时就有必要采用**“放大模式”**
+
+在浏览器环境中，模块的各个部分通常都是从网上获取的，有时无法知道哪个部分会先加载。如果采用上一节的写法，第一个执行的部分有可能加载一个不存在空对象，这时就要采用**“宽放大模式”**。
+
+```javascript
+(function($, util) {
+    var logger = (function() {
+        // ...
+    })();
+
+*    $.extend(util, {logger: logger});  // 扩展util模块
+
+* })(jQuery, util || {});  // 防止util为空
+```
+
+改进：通过扩展的方式，将大模块切割成多个小模块
+
+缺点：脚本加载顺序依旧是问题
+

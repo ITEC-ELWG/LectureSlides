@@ -2,7 +2,7 @@ body {
     font-family: "Microsoft Yahei", Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 h1, h2, h3 {
-    margin: 0.5em 0;
+    margin: 0.2em 0 0.5em;
     font-weight: bold;
     color: #3498db;
 }
@@ -39,6 +39,9 @@ h1, h2, h3 {
     background-color: #000;
     color: #f8f8f8;
     padding: 5px;
+}
+.remark-code-line-highlighted {
+    background-color: rgba(155, 89, 182, 0.7);
 }
 
 /* util */
