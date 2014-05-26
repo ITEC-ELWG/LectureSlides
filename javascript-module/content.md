@@ -146,4 +146,140 @@ class: center, middle
 
 ### Javascript是强大的，可以模拟模块的功能。
 
+---
 
+# 预备知识
+
+* 对象字面量
+* 对象的扩展
+* 作用域
+* 立即函数
+* 闭包
+
+---
+
+## 对象字面量
+
+**万物皆对象。**
+
+*包括函数、模块，等等。*
+
+对象是属性——名值对（key-value pair）的容器，每个key可以是包括空字符串在内的任意字符串，每个value可以是除`undefined`值之外的任何值。
+
+```javascript
+var options = {
+    sourceUrl: 'content.md',
+    maxPage: 10,
+    navigation: {
+        click: true,
+        scroll: false
+    },
+    onClick: function(e)
+        console.log('on click');
+    },
+    getSource: function() {
+        return this.sourceUrl;
+    }
+};
+```
+
+---
+
+## 对象的扩展
+
+将源对象的所有属性合并到目标对象中。
+
+API: [jQuery.extend()](http://api.jquery.com/jquery.extend/)
+
+```javascript
+var target = {};
+var source1 = {
+    foo: 'bar'
+};
+var source2 = {
+    foo: 'hehe',
+    hehe: function() {
+        console.log(this.foo);
+    }
+};
+
+$.extend(target, source1);
+$.extend(target, source2);
+
+// 现在target对象已经具备了其它对象的属性
+console.log(target.foo);
+target.hehe();
+```
+
+---
+
+## 作用域
+
+大多数C语法的语言（C/C艹、Java、C#）都有块级作用域，表现在一对花括号中定义的变量在代码块外是不可见的。Javascript的作用域是**函数**，不是代码块！
+
+```javascript
+var foo = function() {
+    var a = 3, b = 5;
+    var bar = function() {
+        var c = 7;
+        a += (b + c);
+    };
+    bar();
+};
+```
+
+变量上升陷阱
+```javascript
+var foo = 'bar'; 
+function test() { 
+    console.log(foo); 
+    var foo = 'you fool'; 
+    console.log(foo); 
+}
+test(); 
+```
+
+---
+
+## 立即函数
+
+定义一个匿名函数并立即执行。
+
+```javascript
+(function test() {
+    console.log('hehe');
+})();
+
+test(); // ReferenceError: test is not defined
+```
+
+---
+
+## 闭包
+
+闭包是能够读取其他函数内部变量的函数。
+
+闭包最大的用处有两个：一个是可以读取函数内部的变量（实现私有变量机制），另一个就是让这些变量的值始终保持在内存中。
+
+```javascript
+var girl = {
+    _cup: 'A',
+    askCup: function(isBoyFriend) {
+        return isBoyFriend ? this._cup : 'Unknown';
+    }
+};
+console.log(girl.askCup(boy.isBoyFriend));
+console.log(girl._cup);  // 暴露了！
+```
+
+```javascript
+var girl = (function() {
+*    var _cup = 'A';
+    return {
+        askCup: function(isBoyFriend) {
+*            return isBoyFriend ? _cup : 'Unknown';
+        }
+    };
+})();
+console.log(girl._cup);
+```
