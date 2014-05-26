@@ -20,18 +20,31 @@ h1, h2, h3 {
 }
 .remark-slide-content h2 {
     color: #1abc9c;
-    font-size: 2em;
+    font-size: 1.8em;
+}
+.remark-slide-content h3 {
+    color: #9b59b6;
 }
 .remark-slide-content li {
     margin: 0.5em 0;
 }
+.remark-slide-content strong {
+    color: #e67e22;
+}
 .remark-code, .remark-inline-code {
+    font-size: 16px;
     font-family:'Consolas';
 }
 
 /* util */
 .master-title {
     font-size: 1.6em;
+}
+.mts {
+    margin-top: 1em;
+}
+.mtm {
+    margin-top: 2em;
 }
 .mtl {
     margin-top: 4em;
