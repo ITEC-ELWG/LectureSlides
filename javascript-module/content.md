@@ -519,9 +519,35 @@ CommonJS规范最早是针对服务器环境的。如果在浏览器端使用这
 
 在服务器端，因为所有的模块都存放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是，对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时间取决于网速的快慢，可能要等很长时间，浏览器处于“假死”状态。
 
-*因此，浏览器端的模块，不能采用“同步加载”（synchronous），只能采用“异步加载”（asynchronous）。这就是AMD规范诞生的背景。*
+*因此，浏览器端的模块，不能采用“同步加载”（synchronous），只能采用“异步加载”（asynchronous）。这就是**AMD规范**诞生的背景。*
 
 ---
 
 ## AMD规范
+
+Asynchronous Module Definition，异步模块定义
+
+模块的加载不影响它后面语句的运行。所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。
+
+```javascript
+/* matrix.js */
+
+// 依赖
+require('math', function(math) {
+    // 加载完毕后，触发回调
+    // 定义
+    var add = function(ma, mb) {
+        // ...
+    };
+    var minus = function(ma, mb) {
+        // ...
+    };
+
+    //导出
+    return {
+        add: add,
+        minus: minus
+    };
+});
+```
 
