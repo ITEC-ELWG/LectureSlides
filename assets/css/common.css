@@ -48,6 +48,9 @@ h1, h2, h3 {
 .master-title {
     font-size: 1.6em;
 }
+.img img{
+    width: 100%;
+}
 .left-half {
     width: 45%;
     float: left;

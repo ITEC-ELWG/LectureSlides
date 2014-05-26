@@ -13,7 +13,7 @@ by 寿寿
 
 ---
 
-background-image: url(http://fe-lecture-slides.qiniudn.com/Javascript%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AE%9E%E6%88%98.png)
+background-image: url(http://fe-lecture-slides.qiniudn.com/javascript-module/Javascript%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AE%9E%E6%88%98.png)
 
 # 内容提要
 
@@ -496,11 +496,12 @@ var math = require('math');
 
 // 定义
 var add = function(ma, mb) {
-    var mc = [], i, j;
+    var mc = [], t, i, j;
     for(i = 0; i < ma.length; i++) {
         mc.push([]);
         for(j = 0; j < ma[i].length; j++) {
-            mc[i].push(ma[i][j] + mb[i][j]);
+*            t = math.add(ma[i][j] + mb[i][j]);
+            mc[i].push(temp);
         }
     }
     return mc;
@@ -551,3 +552,92 @@ require('math', function(math) {
 });
 ```
 
+---
+
+# Javascript模块化实战
+
+与各个规范对应的实现库：
+
+* AMD：[Require.js](http://www.requirejs.org/)
+* CommonJS：[Sea.js](http://seajs.org/docs/)
+
+---
+
+## Require.js简介
+
+还记得这个没有解决的问题吗？
+
+```html
+<!-- 上面省略至少10个文件 -->
+<script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.uploadify.js"></script>
+<script type="text/javascript" src="js/lib/openseadragon.js"></script>
+<script type="text/javascript" src="js/util/Constant.js"></script>
+<script type="text/javascript" src="js/modules/common_view.js"></script>
+<script type="text/javascript" src="js/modules/image_view.js"></script>
+<script type="text/javascript" src="js/main/board_present.js"></script>
+```
+
+如果项目中有N多页面需要加载不同的JS文件怎么办？
+
+require.js的诞生，就是为了解决这两个问题：
+
+1. 实现js文件的异步加载，避免网页失去响应
+2. 管理模块之间的依赖性，便于代码的编写和维护
+
+---
+
+## Require.js简介（续）
+
+```html
+<!-- 在你的HTML文件的body最后加上 -->
+<script src="js/require.js" data-main="js/main"></script>
+```
+
+```javascript
+/* js/main.js */
+
+require(['modules/math', 'modules/matrix'], 
+    function(math, matrix) {
+        console.log(math.add(1 + 1));
+        console.log(matrix.add(
+            [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
+            [[9, 8, 7], [6, 5, 4], [3, 2, 1]]
+        ));
+    });
+```
+
+```javascript
+/* js/modules/matrix.js */
+
+// 定义
+define(['math'], function(math) {
+    var add = function(ma, mb) {
+        // ...
+    }
+    return {
+        add: add
+    };
+});
+```
+
+---
+
+## 在Heatmap3项目中的应用
+
+（打开本地图片）
+
+---
+
+## 关于Sea.js和CMD规范
+
+CMD规范其实就是CommonJS规范的一种实现。
+
+为什么使用Sea.js？（以下摘抄自官网）
+
+Sea.js 追求简单、自然的代码书写和组织方式，具有以下核心特性：
+
+* 简单友好的模块定义规范：Sea.js 遵循CMD规范，可以像Node.js一般书写模块代码。
+* 自然直观的代码组织方式：依赖的自动加载、配置的简洁清晰，可以让我们更多地享受编码的乐趣。
+
+Sea.js 还提供常用插件，非常有助于开发调试和性能优化，并具有丰富的可扩展接口。
