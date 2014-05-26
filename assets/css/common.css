@@ -48,6 +48,15 @@ h1, h2, h3 {
 .master-title {
     font-size: 1.6em;
 }
+.left-half {
+    width: 45%;
+    float: left;
+    margin-right: 5px;
+}
+.right-half {
+    width: 54%;
+    float: left;
+}
 .mts {
     margin-top: 1em;
 }

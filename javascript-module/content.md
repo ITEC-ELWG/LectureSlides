@@ -459,3 +459,69 @@ class: center, middle
 * AMD规范
 
 无论哪种规范，一个JS模块都分为三大部分：依赖[optional]，定义，导出（我自己总结的）
+
+---
+
+## CommonJS规范
+
+Node.js模块系统的规范。最早用于服务器端模块。
+
+**记住：一个模块一个文件。模块里的全局变量仅对模块本身可见。**
+
+.left-half[
+```javascript
+/* math.js */
+
+// 定义
+var add = function(a, b) {
+    return a + b;
+};
+
+var minus = function(a, b) {
+    return a - b;
+};
+
+// 导出
+exports.add = add;
+exports.minus = minus;
+```
+]
+
+.right-half[
+```javascript
+/* matrix.js */
+
+// 依赖
+var math = require('math');
+
+// 定义
+var add = function(ma, mb) {
+    var mc = [], i, j;
+    for(i = 0; i < ma.length; i++) {
+        mc.push([]);
+        for(j = 0; j < ma[i].length; j++) {
+            mc[i].push(ma[i][j] + mb[i][j]);
+        }
+    }
+    return mc;
+}
+
+// 导出
+exports.add = add;
+```
+]
+
+---
+
+## CommonJS规范（续）
+
+CommonJS规范最早是针对服务器环境的。如果在浏览器端使用这种规范，就会出现问题。
+
+在服务器端，因为所有的模块都存放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是，对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时间取决于网速的快慢，可能要等很长时间，浏览器处于“假死”状态。
+
+*因此，浏览器端的模块，不能采用“同步加载”（synchronous），只能采用“异步加载”（asynchronous）。这就是AMD规范诞生的背景。*
+
+---
+
+## AMD规范
+
