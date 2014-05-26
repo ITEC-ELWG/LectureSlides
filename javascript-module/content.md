@@ -683,3 +683,7 @@ by 寿寿
 
 [http://raytaylorlin.com](http://raytaylorlin.com)
 ]
+
+.small[
+This slide is created by [remark.js](http://remarkjs.com/)
+]

@@ -45,6 +45,9 @@ h1, h2, h3 {
 }
 
 /* util */
+.small {
+    font-size: 0.6em;
+}
 .master-title {
     font-size: 1.6em;
 }
