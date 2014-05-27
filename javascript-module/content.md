@@ -1,6 +1,10 @@
 name: index
 class: center, middle 
 
+.left-top-title[
+*寿寿前端系列讲座（3）*
+]
+
 .master-title[
 # Javascript模块化实战
 ]

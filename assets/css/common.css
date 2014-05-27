@@ -48,6 +48,12 @@ h1, h2, h3 {
 .small {
     font-size: 0.6em;
 }
+.left-top-title {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    color: #27ae60;
+}
 .master-title {
     font-size: 1.6em;
 }
