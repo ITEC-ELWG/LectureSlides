@@ -40,6 +40,8 @@ background-image: url(http://fe-lecture-slides.qiniudn.com/fe-workflow-automatio
 
 ---
 
+name: tradition
+
 ## 回顾：习以为常的传统做法
 
 1、创建项目：新建各种文件夹（images、css、js等等），把原有项目中常用的库复制进来  
@@ -259,9 +261,91 @@ bower uninstall bootstrap
 
 ## Grunt——自动化
 
+为什么要用Grunt？  
+原因一：自动化。  
+原因二：生态系统非常庞大，而且一直在增长。  
+[回顾传统前端开发的痛苦之处](#tradition)
+
+[Grunt快速入门](http://gruntjs.com/getting-started)
+
+要使用Grunt，需要配置两个文件：`package.json`和`Gruntfile.js`。通常来说前者不需要手动配置，只要在`npm install`插件时，加上`--save dev`即可。
+
+```json
+{
+    "name": "my-project-name",
+    "version": "0.1.0",
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-concat": "~0.3.0",
+        "grunt-contrib-jshint": "~0.6.3",
+        "grunt-contrib-uglify": "~0.2.2"
+    }
+}
+```
+
+---
+
+## Grunt——自动化（续）
+
+```javascript
+// 1. wrapper函数，你的所有Grunt代码都必须写在这个函数里面
+module.exports = function(grunt) {
+    // 2. 项目和任务配置
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        concat: {
+            options: {
+                separator: '\n'
+            },
+            dist: {
+                src: ['src/*.js'],
+                dest: 'release/<%= pkg.name %>.js'
+            }
+        },
+        uglify: {
+            dist: {
+                files: {
+                    'release/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                }
+            }
+        }
+    });
+    // 3. 加载各种任务所需的插件
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    // 4. 自定义任务
+    grunt.registerTask('default', ['concat', 'uglify']);
+};
+```
+
+---
+
+## Grunt——自动化（续2）
+
+理解Gruntfile的两个核心概念：**任务**和**目标**
+
+### 常用的Grunt插件介绍
+
+代码合并压缩类：  
+grunt-contrib-concat，grunt-contrib-uglify，grunt-contrib-mincss，grunt-contrib-htmlmin，grunt-contrib-less，grunt-contrib-requirejs
+
+代码检查类：  
+grunt-contrib-jshint，grunt-contrib-csslint
+
+任务控制类：  
+grunt-contrib-watch，grunt-concurrent，grunt-nodeman
+
+图片优化类：  
+grunt-spritesmith，grunt-spritesheet，grunt-imagemin
+
+测试类：  
+grunt-karma，grunt-mocha-test
+
 ---
 
 # 总结
+
+
 
 ---
 
