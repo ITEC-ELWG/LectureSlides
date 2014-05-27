@@ -113,7 +113,7 @@ class: center, middle
 ## Node.js简介
 
 .right[
-![Node.js logo](nodejs_logo.jpg)
+![Node.js logo](images/nodejs_logo.jpg)
 ]
 
 * Node.js是一个基于Google V8这个高性能Javascript引擎的平台
@@ -184,6 +184,64 @@ Github基于Git。它是目前最火的**开源代码托管平台**和**版本�
 .mtl[
 你们只需要知道：当今99%新生的和前端有关的项目、框架、插件，都是在Github上发布的。
 ]
+
+---
+
+# 打造自动化工作流
+
+我们使用：
+
+![Yeoman logo](images/yeoman_logo.gif)
+
+Yeoman是一款现代Web应用的脚手架工具，也是一个工作流。
+
+Yeoman由3部分组成：Yo、Bower、Grunt
+
+---
+
+.pull-right[
+![yo_logo](images/yo_logo.gif)
+]
+
+## Yo——搭建脚手架
+
+为什么要用工具搭建脚手架（建立项目目录结构）？
+
+你们可能以为一个项目的目录结构是这样的：
+
+![普通的目录结构](images/directory.jpg)
+
+不，是[这样](images/directory2.jpg)的（最基础的generator-webapp）
+
+实际还有[更劲爆](images/directory3.jpg)的（generator-mean）
+
+```shell
+npm install -g yo
+npm install -g generator-webapp
+```
+
+```shell
+// 在你要创建项目的目录下
+yo webapp
+```
+
+---
+
+.pull-right[
+![bower_logo](images/bower_logo.png)
+]
+
+## Bower——管理包
+
+
+
+---
+
+.pull-right[
+![grunt_logo](images/grunt_logo.jpg)
+]
+
+## Grunt——自动化
 
 ---
 

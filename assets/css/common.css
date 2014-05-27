@@ -54,6 +54,9 @@ h1, h2, h3 {
     top: 5%;
     color: #27ae60;
 }
+.pull-right {
+    float: right;
+}
 .master-title {
     font-size: 1.6em;
 }
