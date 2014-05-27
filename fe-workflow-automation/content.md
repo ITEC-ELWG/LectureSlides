@@ -233,7 +233,23 @@ yo webapp
 
 ## Bower——管理包
 
+与NPM管理后台的包不同，Bower是用于Web前端开发的包管理器。它运行在Git之上（因此必须先安装Git），默认情况下会去Github下载，并存放在`bower_components`目录下。
 
+为什么要用包管理器？
+
+```shell
+npm install -g bower
+```
+
+常用命令：
+
+```shell
+bower install jquery
+bower install jquery#1.10.2
+bower uninstall bootstrap
+```
+
+可以通过`.bowerrc`文件来对bower进行配置。可以在[这里](http://bower.io/search/)浏览和搜索你感兴趣的包。
 
 ---
 
