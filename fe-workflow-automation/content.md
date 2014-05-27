@@ -102,6 +102,91 @@ class: center, middle
 
 ---
 
+# 基础知识
+
+* Node.js简介
+* Node的包与npm
+* ~~Git与Github~~
+
+---
+
+## Node.js简介
+
+.right[
+![Node.js logo](nodejs_logo.jpg)
+]
+
+* Node.js是一个基于Google V8这个高性能Javascript引擎的平台
+* 使用的语言是Javascript（后台）
+* 用来方便地搭建快速的、易于扩展的网络应用
+* 特点：异步I/O，事件驱动，跨平台
+* 社区活跃，各种包如雨后春笋般涌现
+
+---
+
+## 包与npm
+
+Node中的包，实际上就是一个打包的`.zip`或.`.tar.gz`文件
+
+每个包都有一个包描述文件：`package.json`
+
+```json
+{
+  "name": "Heatmap3",
+  "version": "0.3.0",
+  "description": "Heatmap3",
+  "repository": "",
+  "author": "ELWG Heatmap3 Team",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-spritesmith": "~1.16.0",
+    "grunt-spritesheet": "~0.1.2",
+    "grunt-contrib-imagemin": "~0.4.0",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-csslint": "~0.1.2",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-concat": "~0.3.0"
+  }
+}
+```
+
+---
+
+## 包与npm（续）
+
+Node包管理器[NPM](https://www.npmjs.org/)（随同Node.js一同安装）
+
+最常用的几条npm命令：
+
+```shell
+npm install
+npm install <package> [--save-dev]
+npm install -g <package>
+npm remove <package>
+npm update <package>
+```
+
+---
+
+## Git与Github
+
+传统的版本控制系统是SVN，Git是新兴的分布式版本控制系统。
+
+Github基于Git。它是目前最火的**开源代码托管平台**和**版本控制系统**。
+
+.mtl[
+*关于Git的使用及Github的机制，足以再开另外一次讲座，此处不再赘述。*
+]
+
+.mtl[
+你们只需要知道：当今99%新生的和前端有关的项目、框架、插件，都是在Github上发布的。
+]
+
+---
+
 # 总结
 
 ---
