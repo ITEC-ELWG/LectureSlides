@@ -175,7 +175,7 @@ var options = {
         click: true,
         scroll: false
     },
-    onClick: function(e)
+    onClick: function(e) {
         console.log('on click');
     },
     getSource: function() {
@@ -297,7 +297,7 @@ console.log(girl._cup);
 var name = "The Window";
 var object = {
     name : "My Object",
-    getNameFunc : function(){
+    getNameFunc : function() {
         return function() {
             return this.name;
         };
