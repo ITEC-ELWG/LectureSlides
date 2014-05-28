@@ -248,7 +248,7 @@ test();
 
 ## 立即函数
 
-定义一个匿名函数并立即执行。
+定义一个匿名函数并立即执行。目的：避免声明全局变量
 
 ```javascript
 (function test() {
@@ -256,6 +256,26 @@ test();
 })();
 
 test(); // ReferenceError: test is not defined
+```
+
+```javascript
+// 原生js
+(function() {
+    document.getElementById('btn').addEventListener('click', onBtnClick);
+    // 随便声明，变量不是全局的
+    function onBtnClick(e) {
+        // ...
+    }
+    var foo = 'bar';
+})();
+
+// 使用jQuery
+$(document).ready(function() {
+    // 随便声明，作用域已经在ready这个回调函数里面
+    $('#btn').on('click', function() {
+        // ...
+    });
+});
 ```
 
 ---
@@ -365,9 +385,7 @@ function log(info) {
 ## 命名空间与封装对象写法
 
 ```javascript
-var util = util || {};
-
-util.logger = {
+var logger = {
     _options = {
         debug: true,
         type: 'console',
@@ -377,12 +395,12 @@ util.logger = {
 *        this._options = opts;
     },
     log: function(info) {
-*        var options = this.options, node;
+*        var options = this.options;
         if(options.debug) {
             // ......
         }
     }
-}
+};
 ```
 
 改进：将全局变量缩减到只剩logger一个
@@ -403,7 +421,7 @@ util.logger = {
 
     var log = function(info) { 
         // ...
-        $('#' + options.containerId).append(node);  // 使用jQuery
+        $('#' + _options.containerId).append(node);  // 使用jQuery
         // ...
     };
 
@@ -463,7 +481,7 @@ class: center, middle
 * CommonJS规范
 * AMD规范
 
-无论哪种规范，一个JS模块都分为三大部分：依赖[optional]，定义，导出（我自己总结的）
+无论哪种规范，一个JS模块都分为三大部分：**依赖**[optional]，**定义**，**导出**（我自己总结的）
 
 ---
 
