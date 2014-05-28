@@ -345,12 +345,19 @@ grunt-karma，grunt-mocha-test
 
 # 总结
 
-
+* 前端工作流的概念
+* Node.js与NPM的基础用法
+* 传统的前端开发流程或浪费很多时间，使用适当的自动化工具可以解放你的生产力
+* 打造自动化工作流的利器——Yeoman（Yo、Bower、Grunt）
+* Grunt各种常用插件的基本用法
 
 ---
 
 # 参考
 
+* [《深入浅出Node.js》](http://book.douban.com/subject/25768396/)
+* [Yeoman官网](http://yeoman.io/)
+* [Grunt快速入门](http://gruntjs.com/getting-started)
 
 ---
 class: center, middle
