@@ -13,6 +13,8 @@ class: center, middle
 
 by 寿寿
 
+2014-5-28
+
 [http://raytaylorlin.com](http://raytaylorlin.com)
 ]
 
