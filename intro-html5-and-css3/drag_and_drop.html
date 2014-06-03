@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>html5文件拖拽</title>
+        <style>
+            html,body{
+                background: rgb(235,235,235);
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+            }
+            div,ul{
+                margin: 0;
+                padding:0;
+            }
+            li{
+                list-style: none;
+            }
+            .container{
+                width: 50%;
+                height: 94%;
+                margin: 0 auto;
+                background: white;
+                box-shadow: 0 0 2px 2px #BBB;
+                padding-top: 50px;
+            }
+            .demo-box{
+                width: 60%;
+                margin: 0 auto;
+                border: 1px solid #AAA;
+                padding: 20px;
+            }
+            .drop-area{
+                border: 1px dashed #AAA;
+                height: 100px;
+                color: #AAA;
+                font: 24px "arial";
+                text-align: center;
+                line-height: 100px;
+                background: #EEE;
+            }
+            #error-msg{
+                border: 1px dashed #AAA;
+                height: 100px;
+                color: #AAA;
+                font: 24px "arial";
+                text-align: center;
+                line-height: 100px;
+                background: #EEE;
+                width: 100%;
+                display: none;
+            }
+            .hovering{
+                -webkit-box-shadow: inset 0px 0px 50px #BBB;
+                -moz-box-shadow: inset 0px 0px 50px #BBB;
+                -o-box-shadow: inset 0px 0px 50px #BBB;
+                box-shadow: inset 0px 0px 50px #BBB;
+            }
+           
+            .output-area li{
+                margin-top: 10px;
+            }
+            .thumb{
+                height: 200px;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="demo-box" id="demo-box">
+                <div id="error-msg">很遗憾，您的浏览器不支持此功能</div>
+                <div class="drop-area" id="drop-area">将文件拖拽到这里</div>
+                <output class="output-area" id="output-area">
+                    
+                </output>
+            </div>
+        </div>
+        <script>
+            var output = document.getElementById("output-area"),
+                dropArea = document.getElementById("drop-area");
+            
+             if (!(('draggable' in dropArea) && ('ondragenter' in dropArea)
+                && ('ondragleave' in dropArea) && ('ondragover' in dropArea)
+                && window.File)) {
+                document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('demo-box').style.display = 'none';
+            }else{
+            
+            function handleFileDragEnter(e){
+                e.stopPropagation();
+                e.preventDefault();
+                this.classList.add('hovering');
+            }
+            
+            function handleFileDragLeave(e){
+                e.stopPropagation();
+                e.preventDefault();
+                this.classList.remove('hovering');
+            }
+            
+            function handleFileDragOver(e){
+                e.stopPropagation();
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+            }
+            
+            function handleFileDrop(e){
+                e.stopPropagation();
+                e.preventDefault();
+                this.classList.remove('hovering');
+                
+                var files = e.dataTransfer.files,
+                    outputStr = [];
+                for(var i=0,f;f=files[i];i++){
+                    var imageStr = '';
+                    if(f.type.match('image.*')){
+                        var reader = new FileReader();
+                        reader.onload = (function(theFile){
+                            return function(e){
+                                imageStr = '<div><img class="thumb" src="' + e.target.result + '" title="' + theFile.name  + '"/></div>';
+                                var lastModifyDate = theFile.lastModifiedDate,
+                                lastModifiedStr = lastModifyDate ? lastModifyDate.toLocaleDateString() + " " + lastModifyDate.toLocaleTimeString() : "n/a";
+                                outputStr +=  '<li id="file_'+ i +'"><strong>' + theFile.name + '</strong> (' + ( theFile.type || 'n/a') + ')<br/>大小：'+
+                                theFile.size + '字节<br/>修改时间：' + lastModifiedStr + imageStr + '</li>';
+                                output.innerHTML = '<ul>' + outputStr + '</ul>';
+                            };
+                        })(f);
+                        reader.readAsDataURL(f);
+                    }
+                }
+            }
+            
+            dropArea.addEventListener('dragenter',handleFileDragEnter,false);
+            dropArea.addEventListener('dragleave',handleFileDragLeave,false);
+            dropArea.addEventListener('dragover',handleFileDragOver,false);
+            dropArea.addEventListener('drop',handleFileDrop,false);
+            }
+        </script>
+    </body>
+</html>
