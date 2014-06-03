@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>html5 localstorage</title>
+        <style>
+            html,body{
+                height: 100%;
+                width: 100%;
+                background: rgb(235,235,235);
+                overflow: hidden;
+            }
+            body{
+                 height: 90%;
+            }
+            div,h2,h4,ul,li{
+                padding: 0;
+                margin: 0;
+            }
+            li{
+                list-style: none;
+            }
+            a{
+                text-decoration: none;
+            }
+            .pl-10{
+                padding-left: 10px;
+            }
+            .container{
+                width: 50%;
+                margin: 0 auto;
+                padding: 50px;
+                box-shadow: 0 0 2px 2px #BBB;
+                background: white;
+                height: 90%;
+            }
+            .demo{
+                background: white;
+            }
+            .menu{
+                width: 180px;
+            }
+            .menu-title{
+               border: rgb(198,0,0);
+               width: 170px;
+               display: block;
+               background: rgb(225,0,0);
+               background: -webkit-gradient(linear,0 0,0 100%, from(rgb(231,5,5)),to(rgb(194,0,0)));
+               background: -moz-linear-gradient(top,rgb(255,0,0),rgb(190,0,0));
+               filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=rgb(231,5,5), endColorstr=rgb(194,0,0), GradientType=0);
+               color: white;
+               font: 16px "arial";
+               line-height: 36px;
+               height: 36px;
+            }
+            .menu-list{
+                border: solid #ccc;
+                border-width: 0 1px;
+            }
+            .sub-menu-title{
+                padding-left: 12px;
+                font: 14px "arial";
+                line-height: 30px;
+                color: #333;
+                height: 30px;
+                background: #f9f9f9;
+                background: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9), to(#f1f1f1));
+                background: -moz-linear-gradient(top, #f9f9f9, #f1f1f1);
+                background: -o-linear-gradient(top, #f9f9f9, #f1f1f1);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#f9f9f9, endColorstr=#f1f1f1, GradientType=0);
+                position: relative;
+                border-bottom: 1px solid #ccc;
+            }
+            .sub-menu-title:hover{
+                opacity: .8;
+                cursor: pointer;
+            }
+            .card-up-triangle{
+                display: inline-block;
+                background: url(images/ico_card_down.png) no-repeat;
+                background-position: 0 0;
+                position: absolute;
+                top: 12px;
+                right: 10px;
+                width: 12px;
+                height: 7px;
+                
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -o-transform:rotate(0deg);
+                transform: rotate(0deg);
+                
+                -webkit-transition: -webkit-transform .3s ease-in-out;
+                -moz-transition: -moz-transform .3s ease-in-out;
+                -o-transition: -o-transform .3s ease-in-out;
+                transition: transform .3s ease-in-out;
+            }
+            .rotate{
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -o-transform:rotate(180deg);
+                transform: rotate(180deg); 
+            }
+            .sub-menu-list{
+                border-bottom: 1px solid #ccc;
+            }
+            .sub-menu-list li{
+                font: 12px "arial";
+                height: 24px;
+                border: 3px solid white;
+                height: 22px;
+                padding-left: 20px;
+                line-height: 22px;
+            }
+            .sub-menu-list li:hover{
+                background: #f5f5f5;
+                cursor: pointer;
+            }
+            .card-up{
+                position: absolute;
+                left: -9999em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="demo">
+                <div class="menu">
+                    <h2>
+                        <a href="#" class="menu-title pl-10"><strong>我的会员中心</strong></a>
+                    </h2>
+                    <div class="menu-list">
+                        <h4 class="sub-menu-title" display="1" data-rel="myDeal">
+                            <strong>订单中心</strong>
+                            <i class="card-up-triangle"></i>
+                        </h4>
+                        <ul class="sub-menu-list" id="myDeal">
+                            <li>我的订单</li>
+                            <li>我的现金券</li>
+                        </ul>
+                        <h4 class="sub-menu-title" display="1" data-rel="myInteraction">
+                            <strong>互动中心</strong>
+                            <i class="card-up-triangle"></i>
+                        </h4>
+                        <ul class="sub-menu-list" id="myInteraction">
+                            <li>我的点评</li>
+                            <li>我的好友</li>
+                            <li>我的菜单</li>
+                            <li>我的相册</li>
+                            <li>我的活动</li>
+                            <li>站内信</li>
+                            <li>我的主页</li>
+                        </ul>
+                        <h4 class="sub-menu-title" display="1" data-rel="myAccount">
+                            <strong>账号管理</strong>
+                            <i class="card-up-triangle"></i>
+                        </h4>
+                        <ul class="sub-menu-list" id="myAccount">
+                            <li>账号资料</li>
+                            <li>我的等级</li>
+                            <li>我的礼品卡</li>
+                            <li>我的积分</li>
+                            <li>积分兑换</li>
+                            <li>账号绑定</li>
+                            <li>邮件订阅</li>
+                            <li>修改密码</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var menuTitleList = document.getElementsByClassName("sub-menu-title");
+            var displayStr = '';
+            
+            function storeDisplay(e,displayArr){
+                var displayArr = [];
+                if(menuTitleList&&menuTitleList.length>0){
+                for(var i=0; i<menuTitleList.length;i++){
+                    displayArr[i] = menuTitleList[i].getAttribute("display");
+                }
+                }
+//                menuTitleList.each(function(title, index) {
+//			displayArr[index] = title.retrieve("display") === false? 0: 1;	
+//		});	
+                console.log(displayArr);
+                if(window.localStorage){
+                    localStorage.setItem(displayStr,displayArr);
+                }else{
+                    cookie.write(displayStr,displayArr);
+                }
+            }
+            
+            function menuListToggle(e){
+                var subList = document.getElementById(this.getAttribute("data-rel"));
+                var triangle = this.getElementsByClassName("card-up-triangle")[0];
+                    if(subList){
+                      if(subList.classList.contains("card-up")){
+                        subList.classList.remove("card-up");
+                        triangle.classList.remove("rotate");
+                        this.setAttribute("display", 1);
+                    }else{
+                        subList.classList.add("card-up");
+                        triangle.classList.add("rotate");
+                        this.setAttribute("display", 0);
+                    }  
+                }
+                storeDisplay();
+            }
+            
+            if(menuTitleList&&menuTitleList.length>0){
+                for(var i=0; i<menuTitleList.length;i++){
+                    menu = menuTitleList[i];
+                    menu.addEventListener('click',menuListToggle,false);
+                }
+            }
+            
+            var localStorageData = window.localStorage ? localStorage.getItem(displayStr) : cookie.read(displayStr);
+            if (localStorageData) {
+		var isDisplay = [];
+                isDisplay = localStorageData.split(",");
+                for(var j=0;j<isDisplay.length;j++){
+                    if(parseInt(isDisplay[j]) === 0){
+                        menuTitleList[j].click();
+                    }
+                }	
+            }
+        </script>
+    </body>
+</html>
