@@ -176,7 +176,7 @@ Smarty的标签都是使用定界符括起来，默认定界符是{ 和 }
 
 ---
 
-# 变量
+## 变量
 
 从数组赋值（最常用）
 
@@ -202,7 +202,7 @@ $smarty->display('index.tpl');
 
 ---
 
-# 变量（续1）
+## 变量（续1）
 
 从配置文件赋值（通过#号来访问）
 
@@ -225,7 +225,7 @@ keywords = "爱唱歌, 唱歌, 校园音乐平台"
 
 ---
 
-# 变量（续2）
+## 变量（续2）
 
 $smarty保留变量
 
@@ -247,7 +247,7 @@ $smarty保留变量
 
 ---
 
-# 修饰器
+## 修饰器
 
 * 修饰器可以用于变量、自定义函数或者字符串，类似于管道
 * 使用`|`竖线跟着修饰器名称，可能会用`:`冒号附加参数
@@ -272,7 +272,7 @@ $smarty保留变量
 
 ---
 
-# 内置函数
+## 内置函数
 
 {if}, {elseif}, {else}
 
@@ -298,7 +298,7 @@ $smarty保留变量
 
 ---
 
-# 内置函数（续）
+## 内置函数（续）
 
 {foreach} @iteration @first @last @total
 
@@ -325,7 +325,113 @@ $smarty保留变量
 
 ---
 
+# 模板继承
+
+问题：**，如何减少共用页面所引起的重复和冗余代码？**
+
+解决方法1：传统的`require`（`require_once`）  
+或者刚刚学的{include}指令
+
+解决方法2：更加优雅的策略——模板继承
+
+传统做法：
+
+[board_present.php](images/board_present_php.jpg)
+
+[room_present.php](images/room_present_php.jpg)
+
+---
+
+## 潜在问题
+
+1. 如果一个网站有10个页面怎么办？
+2. 如果我要修改doctype以支持低端浏览器怎么办？
+3. 基于include策略，拆分HTML各个部分？
+
+header.html
+
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+```
+
+footer.html
+
+```html
+</body>
+</html>
+```
+
+Too ugly！而且极其容易少写闭合标签！
+
+---
+
+## 父模板
+
+定义父模板（抽象公共特征）
+
+base.tpl
+
+```tpl
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{block name="title"}IChangge 3.0{/block}</title>
+    {block name="head"}{/block}
+</head>
+<body>
+{block name="body"}{/block}
+{block name="javascript"}
+    <script src="/js/common.js"></script>
+{/block}
+</body>
+</html>
+```
+
+---
+
+## 子模板
+
+子模板继承并扩展
+
+index.tpl
+
+```tpl
+{extends file="base.tpl"}  {* 第一句必须是extends *}
+
+{* 没有{block name="title"}，用默认的标题 *}
+
+{* 覆盖父模板 *}
+{block name="head"}
+    <link href="/css/index.css" rel="stylesheet" type="text/css"/>
+{/block}
+{block name="body"}
+    {* index的本体 *}
+{/block}
+
+{* 使用父模板的内容 *}
+{block name="javascript"}
+    {$smarty.block.parent}
+    <script src="/js/index.js"></script>
+{/block}
+```
+
+---
+
+# 总结
+
+* Smarty的哲学理念
+* Smarty的基本语法
+* 模板继承
+
+---
+
 # 参考
+
+[Smarty3手册](http://www.smarty.net/docs/zh_CN/)
+
+![快速入门推荐阅读章节](images/reading.jpg)
 
 ---
 class: center, middle
