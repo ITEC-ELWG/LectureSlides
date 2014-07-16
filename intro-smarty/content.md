@@ -43,7 +43,7 @@ HTML代码中内嵌PHP会使代码变得极度ugly。
 
 程序逻辑和主页面混合，各种require错综复杂
 
-[反例2](images/html-nexted-php2.jpg)
+[反例2](images/html-nested-php2.jpg)
 
 ---
 
@@ -55,6 +55,8 @@ HTML代码中内嵌PHP会使代码变得极度ugly。
 * 快速和简单的维护
 * 语法简单易懂，无须懂PHP
 * 前端和后端人员更加专注
+
+核心思想：**业务逻辑和显示逻辑分离**
 
 ---
 
@@ -210,8 +212,8 @@ ichangge.conf配置文件：
 
 ```conf
 title = "爱唱歌3.0"
-description = "校园音乐平台爱唱歌3.0"
-keywords = "爱唱歌, 唱歌, 校园音乐平台"
+description = "校园音乐榜爱唱歌3.0"
+keywords = "爱唱歌, 音乐榜, 校园音乐榜, 校园音乐社区"
 ```
 
 ```tpl
@@ -327,18 +329,18 @@ $smarty保留变量
 
 # 模板继承
 
-问题：**，如何减少共用页面所引起的重复和冗余代码？**
+问题：**如何减少共用页面所引起的重复和冗余代码？**
 
 解决方法1：传统的`require`（`require_once`）  
 或者刚刚学的{include}指令
-
-解决方法2：更加优雅的策略——模板继承
 
 传统做法：
 
 [board_present.php](images/board_present_php.jpg)
 
 [room_present.php](images/room_present_php.jpg)
+
+解决方法2：更加优雅的策略——模板继承
 
 ---
 
