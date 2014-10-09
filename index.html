@@ -23,12 +23,11 @@
       </p>
     </header>
     <section>
-      <h1>
+      <h2>
         <a name="lectureslides" class="anchor" href="#lectureslides">
           <span class="octicon octicon-link"></span>
-        </a>LectureSlides</h1>
-
-      <p>A repo to store presentation slides for lectures at ITEC-ELWG</p>
+        </a>Category</h2>
+      <ol class="slides-category"></ol>
     </section>
     <footer>
       <p>This project is maintained by <a href="https://github.com/ITEC-ELWG">ITEC-ELWG</a>
@@ -39,8 +38,21 @@
       </p>
     </footer>
   </div>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="assets/lib/scale.fix.js"></script>
-
+  <script>
+  $(function() {
+    $.getJSON('category.json', function(res) {
+      var $list = $('.slides-category');
+      for (var i = 0; i < res.length; i += 1) {
+        $('<li>')
+          .append($('<a>').attr('href', res[i].url).html(res[i].title))
+          .append($('<span>').html(res[i].author).css({'float': 'right'}))
+          .appendTo($list);
+      }
+    });
+  });
+  </script>
 </body>
 
 </html>
