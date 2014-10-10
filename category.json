@@ -2,26 +2,40 @@
     {
         "title": "Javascript模块化实战",
         "author": "寿寿",
-        "url": "javascript-module"
+        "url": "javascript-module",
+        "date": "2014-05-28",
+        "tag": "寿寿前端系列"
     },
     {
         "title": "前端自动化工作流简介",
         "author": "寿寿",
-        "url": "fe-workflow-automation"
+        "url": "fe-workflow-automation",
+        "date": "2014-05-29",
+        "tag": "寿寿前端系列"
     },
     {
         "title": "Smarty简介",
         "author": "寿寿",
-        "url": "intro-smarty"
+        "url": "intro-smarty",
+        "date": "2014-07-16",
+        "tag": "寿寿前端系列"
     },
     {
         "title": "游戏AI中的A*算法",
         "author": "寿寿",
-        "url": "astar-algorithm-in-game"
+        "url": "astar-algorithm-in-game",
+        "date": "2014-06-03"
+    },
+    {
+        "title": "青桔网前端架构简介",
+        "author": "寿寿",
+        "url": "qingvoice-fe-framework",
+        "date": "2014-10-10"
     },
     {
         "title": "HTML5 & CSS3 简介",
         "author": "张曼",
-        "url": "intro-html5-and-css3"
+        "url": "intro-html5-and-css3",
+        "date": "2014-06-03"
     }
 ]

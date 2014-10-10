@@ -130,6 +130,13 @@ class: center, middle
 
 ---
 
+### 几个技巧性的小例子
+
+* 消息体系的Smarty模板
+* Battle单页应用
+
+---
+
 class: center, middle
 
 .master-title[
