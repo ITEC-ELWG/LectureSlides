@@ -42,7 +42,7 @@
     <script src="assets/lib/scale.fix.js"></script>
 
     <script id="list-item-template" type="text/js-template">
-        <li>
+        <li class="category-item">
             <span class="slide-tag">{{tag}}</span>
             <a href="{{url}}">{{title}}</a>
             <span class="pull-right">{{author}}（{{date}}）</span>
@@ -56,7 +56,7 @@
                 tplHtml, $item;
 
             res.sort(function(a, b) {
-                return (new Date(a.date) - new Date(b.date));
+                return (new Date(b.date) - new Date(a.date));
             });
 
             for (var i = 0; i < res.length; i += 1) {
@@ -66,6 +66,12 @@
                 });
                 $item = $(tplHtml).appendTo($list);
             }
+
+            $('.slide-tag').each(function(i, el) {
+                if ($(el).html() === '') {
+                    $(el).remove();
+                }
+            })
         });
     });
     </script>

@@ -251,3 +251,18 @@ footer {
     color:#444;
   }
 }
+
+.category-item {
+  margin: 10px 0;
+}
+
+.slide-tag {
+  padding: 5px;
+  color: white;
+  background-color: #3498db;
+  border-radius: 3px;
+}
+
+.pull-right {
+  float: right;
+}
