@@ -2,57 +2,73 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <title>LectureSlides by ITEC-ELWG</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>LectureSlides by ITEC-ELWG</title>
 
-  <link rel="stylesheet" href="assets/css/index.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <!--[if lt IE 9]>
+    <link rel="stylesheet" href="assets/css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
 
 <body>
-  <div class="wrapper">
-    <header>
-      <h1>LectureSlides</h1>
-      <p>A repo to store presentation slides for lectures at ITEC-ELWG</p>
+    <div class="wrapper">
+        <header>
+            <h1>LectureSlides</h1>
+            <p>A repo to store presentation slides for lectures at ITEC-ELWG</p>
 
-      <p class="view"><a href="https://github.com/ITEC-ELWG/LectureSlides">View the Project on GitHub <small>ITEC-ELWG/LectureSlides</small></a>
-      </p>
-    </header>
-    <section>
-      <h2>
-        <a name="lectureslides" class="anchor" href="#lectureslides">
-          <span class="octicon octicon-link"></span>
-        </a>Category</h2>
-      <ol class="slides-category"></ol>
-    </section>
-    <footer>
-      <p>This project is maintained by <a href="https://github.com/ITEC-ELWG">ITEC-ELWG</a>
-      </p>
-      <p>
-        <small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a>
-        </small>
-      </p>
-    </footer>
-  </div>
-  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="assets/lib/scale.fix.js"></script>
-  <script>
-  $(function() {
-    $.getJSON('category.json', function(res) {
-      var $list = $('.slides-category');
-      for (var i = 0; i < res.length; i += 1) {
-        $('<li>')
-          .append($('<a>').attr('href', res[i].url).html(res[i].title))
-          .append($('<span>').html(res[i].author).css({'float': 'right'}))
-          .appendTo($list);
-      }
+            <p class="view"><a href="https://github.com/ITEC-ELWG/LectureSlides">View the Project on GitHub <small>ITEC-ELWG/LectureSlides</small></a>
+            </p>
+        </header>
+        <section>
+            <h2>
+                <a name="lectureslides" class="anchor" href="#lectureslides">
+                    <span class="octicon octicon-link"></span>
+                </a>Category</h2>
+            <ol class="slides-category"></ol>
+        </section>
+        <footer>
+            <p>This project is maintained by <a href="https://github.com/ITEC-ELWG">ITEC-ELWG</a>
+            </p>
+            <p>
+                <small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a>
+                </small>
+            </p>
+        </footer>
+    </div>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="assets/lib/scale.fix.js"></script>
+
+    <script id="list-item-template" type="text/js-template">
+        <li>
+            <span class="slide-tag">{{tag}}</span>
+            <a href="{{url}}">{{title}}</a>
+            <span class="pull-right">{{author}}（{{date}}）</span>
+        </li>
+    </script>
+
+    <script>
+    $(function() {
+        $.getJSON('category.json', function(res) {
+            var $list = $('.slides-category'),
+                tplHtml, $item;
+
+            res.sort(function(a, b) {
+                return (new Date(a.date) - new Date(b.date));
+            });
+
+            for (var i = 0; i < res.length; i += 1) {
+                tplHtml = $('#list-item-template').clone().html();
+                tplHtml = tplHtml.replace(/{{(\w+)}}/g, function(m, key) {
+                    return res[i][key] || "";
+                });
+                $item = $(tplHtml).appendTo($list);
+            }
+        });
     });
-  });
-  </script>
+    </script>
 </body>
 
 </html>
